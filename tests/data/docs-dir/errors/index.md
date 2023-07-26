@@ -1,0 +1,7 @@
+# Error index
+
+```{toctree}
+:glob:
+
+*
+```
