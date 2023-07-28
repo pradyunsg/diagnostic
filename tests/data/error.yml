@@ -1,0 +1,319 @@
+- name: complete
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes:
+      - "It has broken some logic and that is\nvery bad."
+      - "It is bad."
+    note_stmt: "This was a user error\nand it could have been avoided."
+    hint_stmt: "Avoid the user error in the future\nusing on this hint."
+    docs_index: "https://example.com/{code}"
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    Caused by:
+    --> It has broken some logic and that is
+        very bad.
+    --> It is bad.
+
+    note: This was a user error
+          and it could have been avoided.
+    hint: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see https://example.com/test-diagnostic
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    It has broken some logic and that is
+    very bad.
+    It is bad.
+
+    note: This was a user error
+          and it could have been avoided.
+    hint: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see https://example.com/test-diagnostic
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+    │ :(
+    ├─> It has broken some logic and that is
+    │   very bad.
+    ╰─> It is bad.
+
+    note: This was a user error
+          and it could have been avoided.
+    hint: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see https://example.com/test-diagnostic
+
+- name: skip_causes
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes: []
+    note_stmt: "This was a user error\nand it could have been avoided."
+    hint_stmt: "Avoid the user error in the future\nusing on this hint."
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    note: This was a user error
+          and it could have been avoided.
+    hint: Avoid the user error in the future
+          using on this hint.
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    note: This was a user error
+          and it could have been avoided.
+    hint: Avoid the user error in the future
+          using on this hint.
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+      :(
+
+    note: This was a user error
+          and it could have been avoided.
+    hint: Avoid the user error in the future
+          using on this hint.
+
+- name: skip_note
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes:
+      - "It has broken some logic and that is\nvery bad."
+      - "It is bad."
+    note_stmt: null
+    hint_stmt: "Avoid the user error in the future\nusing on this hint."
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    Caused by:
+    --> It has broken some logic and that is
+        very bad.
+    --> It is bad.
+
+    hint: Avoid the user error in the future
+          using on this hint.
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    It has broken some logic and that is
+    very bad.
+    It is bad.
+
+    hint: Avoid the user error in the future
+          using on this hint.
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+    │ :(
+    ├─> It has broken some logic and that is
+    │   very bad.
+    ╰─> It is bad.
+
+    hint: Avoid the user error in the future
+          using on this hint.
+
+- name: skip_hint
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes:
+      - "It has broken some logic and that is\nvery bad."
+      - "It is bad."
+    note_stmt: "This was a user error\nand it could have been avoided."
+    hint_stmt: null
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    Caused by:
+    --> It has broken some logic and that is
+        very bad.
+    --> It is bad.
+
+    note: This was a user error
+          and it could have been avoided.
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    It has broken some logic and that is
+    very bad.
+    It is bad.
+
+    note: This was a user error
+          and it could have been avoided.
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+    │ :(
+    ├─> It has broken some logic and that is
+    │   very bad.
+    ╰─> It is bad.
+
+    note: This was a user error
+          and it could have been avoided.
+
+- name: skip_causes_hint
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes: []
+    note_stmt: "This was a user error\nand it could have been avoided."
+    hint_stmt: null
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    note: This was a user error
+          and it could have been avoided.
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    note: This was a user error
+          and it could have been avoided.
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+      :(
+
+    note: This was a user error
+          and it could have been avoided.
+
+- name: skip_causes_note
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes: []
+    note_stmt: null
+    hint_stmt: "Avoid the user error in the future\nusing on this hint."
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    hint: Avoid the user error in the future
+          using on this hint.
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    hint: Avoid the user error in the future
+          using on this hint.
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+      :(
+
+    hint: Avoid the user error in the future
+          using on this hint.
+
+- name: skip_hint_note
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes:
+      - "It has broken some logic and that is\nvery bad."
+      - "It is bad."
+    note_stmt: null
+    hint_stmt: null
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    Caused by:
+    --> It has broken some logic and that is
+        very bad.
+    --> It is bad.
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+
+    It has broken some logic and that is
+    very bad.
+    It is bad.
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+    │ :(
+    ├─> It has broken some logic and that is
+    │   very bad.
+    ╰─> It is bad.
+
+- name: skip_hint_note_causes
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes: []
+    note_stmt: null
+    hint_stmt: null
+    docs_index: null
+  str: |-
+    test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+  ascii: |
+    error: test-diagnostic
+
+    You touched a bit and it changed.
+    :(
+  unicode: |
+    error: test-diagnostic
+
+    × You touched a bit and it changed.
+      :(

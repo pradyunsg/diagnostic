@@ -1,0 +1,95 @@
+# This file is distinct from render.yml since the corresponding test
+# needs to have different behaviours:
+#
+# 1. Render the error object with a different function call.
+# 2. Replace `\e` with ASCII ESC. This is to work around the following
+#    limitation in YAML's literal scalars (i.e. the multiline string
+#    with `|`):
+#
+#    > There is no way to escape characters inside literal scalars.
+#
+#    quote from https://yaml.org/spec/1.2.2/#812-literal-style
+
+- name: color
+  given:
+    code: test-diagnostic
+    message: "You touched a bit and it [yellow]changed[/].\n:("
+    causes:
+      - "It has broken some logic and that is\nvery bad."
+      - "It is bad."
+    note_stmt: "This was a user error\nand it could have been avoided."
+    hint_stmt: "Avoid the user error in the future\nusing on this hint."
+    docs_index: "https://example.com/{code}"
+  ascii: |
+    \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
+
+    You touched a bit and it \e[33mchanged\e[0m.
+    :\e[1m(\e[0m
+
+    It has broken some logic and that is
+    very bad.
+    It is bad.
+
+    \e[1;35mnote\e[0m: This was a user error
+          and it could have been avoided.
+    \e[1;36mhint\e[0m: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see \e[4;94mhttps://example.com/test-diagnostic\e[0m
+  unicode: |
+    \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
+
+    \e[31m×\e[0m You touched a bit and it \e[33mchanged\e[0m.
+    \e[31m│\e[0m :\e[1m(\e[0m
+    \e[31m├─>\e[0m It has broken some logic and that is
+    \e[31m│  \e[0m very bad.
+    \e[31m╰─>\e[0m It is bad.
+
+    \e[1;35mnote\e[0m: This was a user error
+          and it could have been avoided.
+    \e[1;36mhint\e[0m: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see \e[4;94mhttps://example.com/test-diagnostic\e[0m
+
+- name: color-rich-text
+  given:
+    code: test-diagnostic
+    message: !text "You touched a bit and it [yellow]changed[/].\n:("
+    causes:
+      - !text "It has broken some logic and that is\nvery bad."
+      - !text "It is bad."
+    note_stmt: !text "This was a user error\nand it could have been avoided."
+    hint_stmt: !text "Avoid the user error in the future\nusing on this hint."
+    docs_index: "https://example.com/{code}"
+  ascii: |
+    \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
+
+    You touched a bit and it [yellow]changed[/].
+    :(
+
+    It has broken some logic and that is
+    very bad.
+    It is bad.
+
+    \e[1;35mnote\e[0m: This was a user error
+          and it could have been avoided.
+    \e[1;36mhint\e[0m: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see \e[4;94mhttps://example.com/test-diagnostic\e[0m
+  unicode: |
+    \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
+
+    \e[31m×\e[0m You touched a bit and it [yellow]changed[/].
+    \e[31m│\e[0m :(
+    \e[31m├─>\e[0m It has broken some logic and that is
+    \e[31m│  \e[0m very bad.
+    \e[31m╰─>\e[0m It is bad.
+
+    \e[1;35mnote\e[0m: This was a user error
+          and it could have been avoided.
+    \e[1;36mhint\e[0m: Avoid the user error in the future
+          using on this hint.
+
+    For more details, see \e[4;94mhttps://example.com/test-diagnostic\e[0m
