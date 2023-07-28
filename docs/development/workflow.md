@@ -18,8 +18,8 @@ To work on this project, you need to have git 2.17+ and Python 3.6+. You also ne
 - Clone this project using git:
 
   ```
-  git clone https://github.com/pradyunsg/furo.git
-  cd furo
+  git clone https://github.com/pradyunsg/diagnostic.git
+  cd diagnostic
   ```
 
 - Install the project's development workflow runner:
@@ -68,7 +68,7 @@ The server also watches for changes made to the documentation (`docs/`) or theme
 nox -s docs
 ```
 
-Generate the documentation for Furo into the `build/docs` folder. This (mostly) does the same thing as `nox -s docs-live`, except it invokes `sphinx-build` instead of [sphinx-autobuild].
+Generate the documentation for diagnostic into the `build/docs` folder. This (mostly) does the same thing as `nox -s docs-live`, except it invokes `sphinx-build` instead of [sphinx-autobuild].
 
 ## Release process
 
@@ -78,12 +78,12 @@ Generate the documentation for Furo into the `build/docs` folder. This (mostly) 
 
 ## Installing directly from GitHub
 
-There are times when you might want to install the in-development version of Furo (mostly for testing that a fix actually does fix things).
+There are times when you might want to install the in-development version of diagnostic (mostly for testing that a fix actually does fix things).
 
-This can be done by directly telling pip to install from Furo from GitHub. You likely want to install from a zip archive, to avoid cloning the entire Git history:
+This can be done by directly telling pip to install from diagnostic from GitHub. You likely want to install from a zip archive, to avoid cloning the entire Git history:
 
 ```sh
-pip install https://github.com/pradyunsg/furo/archive/refs/heads/main.zip
+pip install https://github.com/pradyunsg/diagnostic/archive/refs/heads/main.zip
 ```
 
 [github flow]: https://guides.github.com/introduction/flow/
