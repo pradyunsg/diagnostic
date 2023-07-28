@@ -10,15 +10,11 @@ The [Code of Conduct] applies within all community spaces. If you are not famili
 :hidden:
 
 workflow
-internals
 design
 ```
 
 [Workflow](./workflow)
 : Describes how to work on this project. Start here if you're a new contributor.
-
-[Internals](./internals)
-: Describes how this project's various parts work.
 
 [Design Goals](./design)
 : Describes the priorities for this project, which guide the decision making process.
