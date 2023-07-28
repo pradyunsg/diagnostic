@@ -49,23 +49,3 @@ The error index page(s) serve a way to provide more information about the error 
 Ideally, it should be a _complete_ list of all error messages that the project can produce. This does take some effort to create, but it serves as an important piece of the usability and discoverability puzzle when it comes to error messages.
 
 That said, an error index page is not a substitute for good error messages. The error index page should be used to provide additional context and guidance on how to fix the error, but it should not be used to avoid writing good error messages in the first place.
-
-## Appendix: ChatGPT's recommendations
-
-I wrote this in Dec 2022. I was curious to see what a [ChatGPT](https://openai.com/blog/chatgpt/) would say about this topic, so...
-
-> > Prompt: Tell me what an excellent error message from a command line tool should contain.
->
-> An excellent error message from a command line tool should contain the following elements:
->
-> 1. A clear and concise description of the error: The error message should explain what went wrong and why the command failed.
->
-> 1. A suggestion for how to fix the error: If possible, the error message should provide a suggestion for how the user can fix the error and try the command again.
->
-> 1. The error code: It can be helpful to include an error code or other identifier that can be used to look up more information about the error.
->
-> 1. The context in which the error occurred: Providing information about the context in which the error occurred (e.g., the command that was being run, the arguments that were provided) can help the user understand the root cause of the error and how to fix it.
->
-> 1. A link to additional resources: If there are additional resources that can help the user understand and fix the error (e.g., documentation, forums), it can be helpful to include a link to these resources in the error message.
-
-Turns out, `diagnostic-errors` provides all of these pieces out of the box. I guess I know as much about error messages as this chatbot, about _what_ should be in an error message. :P
