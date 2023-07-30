@@ -37,7 +37,7 @@ jobs:
       - name: "Generate hashes"
         id: hash
         run: |
-          cd dist && echo "::set-output name=hashes::$(sha256sum * | base64 -w0)"
+          cd dist && echo "name=hashes::$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
 
       - name: "Upload dists"
         uses: "actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce"
@@ -63,6 +63,8 @@ jobs:
     name: "Publish"
     if: startsWith(github.ref, 'refs/tags/')
     needs: ["build", "provenance"]
+    environment:
+      name: "publish"
     permissions:
       contents: write
       id-token: write # Needed for trusted publishing to PyPI.
