@@ -34,12 +34,10 @@ def _is_valid_code(s: str) -> bool:
     return re.match(RE_code, s) is not None
 
 
-def _to_plain_str(s: str | rich.text.Text) -> str:
-    """Convert user inputs to a string."""
+def _ensure_text(s: str | rich.text.Text) -> rich.text.Text:
     if isinstance(s, str):
-        return rich.text.Text.from_markup(s).plain
-    else:
-        return s.plain
+        return rich.text.Text(s)
+    return s
 
 
 def _index_prefix_rich(
@@ -49,18 +47,13 @@ def _index_prefix_rich(
     prefix: str,
     indent: str,
 ) -> rich.text.Text:
-    if isinstance(s, str):
-        text = console.render_str(s)
-    else:
-        text = s
-
-    lines = text.split(allow_blank=True)
+    lines = _ensure_text(s).split(allow_blank=True)
     body = console.render_str(f"\n{indent}", overflow="ignore").join(lines)
     return console.render_str(prefix, overflow="ignore") + body
 
 
 def _indent_prefix(s: str | rich.text.Text, *, prefix: str, indent: str) -> str:
-    first, _, rest = _to_plain_str(s).partition("\n")
+    first, _, rest = _ensure_text(s).plain.partition("\n")
     return "\n".join(filter(None, [prefix + first, textwrap.indent(rest, indent)]))
 
 
@@ -197,7 +190,7 @@ class Diagnostic:
         assert self.code is not None
         yield self.code
         yield ""
-        yield _to_plain_str(self.message)
+        yield _ensure_text(self.message).plain
         if self.causes:
             yield ""
             yield "Caused by:"
@@ -253,11 +246,11 @@ class Diagnostic:
                     indent="  ",
                 )
         else:
-            yield self.message
+            yield _ensure_text(self.message)
             if self.causes:
                 yield ""
                 for item in self.causes:
-                    yield item
+                    yield _ensure_text(item)
 
         if not (self.note_stmt is None and self.hint_stmt is None):
             yield ""
