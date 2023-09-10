@@ -11,6 +11,7 @@ from typing import Any, Callable, Iterable, Sequence, TypeVar
 import rich
 import rich.traceback
 from rich.markup import escape
+from rich.text import Text
 
 from . import DiagnosticError
 from ._parsers import find_code_headings_in_document, find_codes_in_sources
@@ -25,10 +26,10 @@ def _format_to_lines(
     *,
     kind: str,
     fallback_filename: str = "<unset>",
-) -> str:
+) -> Text | None:
     """Format the codes to lines of text."""
     if not names:
-        return ""
+        return None
 
     lines = [f"[red]{len(names)} {kind}[/]:"]
     for name in sorted(names):
@@ -41,7 +42,7 @@ def _format_to_lines(
                 lineno = entry
                 filename = fallback_filename
             lines.append(f"    from [blue]{escape(filename)}[/]:[cyan]{lineno}[/]")
-    return "\n".join(lines)
+    return Text.from_markup("\n".join(lines))
 
 
 def _process(
