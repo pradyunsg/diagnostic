@@ -72,9 +72,15 @@ Generate the documentation for diagnostic into the `build/docs` folder. This (mo
 
 ## Release process
 
-- Update the changelog
-- Run `nox -s release`
-- Once that command succeeds, you're done!
+- Checkout a new branch from `main` for release (or a tag, for a hotfix).
+- Update the changelog.
+- Update the version number in `src/diagnostic/__init__.py`.
+- Commit the changes.
+- Run `git tag -s N.N.N -m "Version N.N.N"` to create a new tag.
+- Push the branch to GitHub using `git push origin branch-name`
+- Merge the branch into `main` using a pull request.
+- Push the tag to GitHub using `git push origin vN.N.N`
+  - This will trigger a GitHub Action, that will publish the new version to PyPI.
 
 ## Installing directly from GitHub
 
