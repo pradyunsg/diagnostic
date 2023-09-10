@@ -217,23 +217,24 @@ def main() -> None:
     docs_index = Path(args.docs_index)
 
     if not source.exists():
-        print(f"Source {source} does not exist.")
+        rich.print(f"Source {source} does not exist.", file=sys.stderr)
         sys.exit(1)
     if source.is_file() and not source.name.endswith(".py"):
-        print(f"Source {source} is not a Python file.")
+        rich.print(f"Source {source} is not a Python file.", file=sys.stderr)
         sys.exit(1)
 
     if not docs_index.exists():
-        print(f"Error index {docs_index} does not exist.")
+        rich.print(f"Error index {docs_index} does not exist.", file=sys.stderr)
         sys.exit(1)
     if docs_index.is_file() and not docs_index.name.endswith((".rst", ".md")):
-        print(
-            f"Error index {docs_index} is not a " "reStructuredText or Markdown file."
+        rich.print(
+            f"Error index {docs_index} is not a " "reStructuredText or Markdown file.",
+            file=sys.stderr,
         )
         sys.exit(1)
 
     try:
         _process(source, docs_index, args.verbose, args.fail_on_extra)
     except DiagnosticError as e:
-        rich.print(e)
+        rich.print(e, file=sys.stderr)
         sys.exit(1)
