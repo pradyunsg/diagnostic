@@ -23,8 +23,8 @@
   ascii: |
     \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
 
-    You touched a bit and it \e[33mchanged\e[0m.
-    :\e[1m(\e[0m
+    You touched a bit and it [yellow]changed[/].
+    :(
 
     It has broken some logic and that is
     very bad.
@@ -39,8 +39,8 @@
   unicode: |
     \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
 
-    \e[31m×\e[0m You touched a bit and it \e[33mchanged\e[0m.
-    \e[31m│\e[0m :\e[1m(\e[0m
+    \e[31m×\e[0m You touched a bit and it [yellow]changed[/].
+    \e[31m│\e[0m :(
     \e[31m├─>\e[0m It has broken some logic and that is
     \e[31m│  \e[0m very bad.
     \e[31m╰─>\e[0m It is bad.
@@ -65,7 +65,7 @@
   ascii: |
     \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
 
-    You touched a bit and it [yellow]changed[/].
+    You touched a bit and it \e[33mchanged\e[0m.
     :(
 
     It has broken some logic and that is
@@ -81,7 +81,7 @@
   unicode: |
     \e[1;31merror\e[0m: \e[1mtest-diagnostic\e[0m
 
-    \e[31m×\e[0m You touched a bit and it [yellow]changed[/].
+    \e[31m×\e[0m You touched a bit and it \e[33mchanged\e[0m.
     \e[31m│\e[0m :(
     \e[31m├─>\e[0m It has broken some logic and that is
     \e[31m│  \e[0m very bad.

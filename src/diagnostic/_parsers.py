@@ -73,7 +73,6 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
         with open(file) as f:
             tree = ast.parse(f.read())
 
-        print(ast.dump(tree))
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 for attr in node.body:
@@ -95,7 +94,6 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
                             continue
                         codes[ref].append((file, node.lineno))
             elif isinstance(node, ast.Call):
-                print(ast.dump(node))
                 for kw in node.keywords:
                     if kw.arg == "code" and isinstance(kw.value, ast.Str):
                         ref = kw.value.s

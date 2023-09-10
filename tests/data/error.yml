@@ -11,7 +11,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     Caused by:
@@ -28,7 +28,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     It has broken some logic and that is
@@ -44,7 +44,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
     │ :(
     ├─> It has broken some logic and that is
     │   very bad.
@@ -68,7 +68,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     note: This was a user error
@@ -78,7 +78,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     note: This was a user error
@@ -88,7 +88,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
       :(
 
     note: This was a user error
@@ -109,7 +109,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     Caused by:
@@ -122,7 +122,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     It has broken some logic and that is
@@ -134,7 +134,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
     │ :(
     ├─> It has broken some logic and that is
     │   very bad.
@@ -156,7 +156,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     Caused by:
@@ -169,7 +169,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     It has broken some logic and that is
@@ -181,7 +181,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
     │ :(
     ├─> It has broken some logic and that is
     │   very bad.
@@ -201,7 +201,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     note: This was a user error
@@ -209,7 +209,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     note: This was a user error
@@ -217,7 +217,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
       :(
 
     note: This was a user error
@@ -234,7 +234,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     hint: Avoid the user error in the future
@@ -242,7 +242,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     hint: Avoid the user error in the future
@@ -250,7 +250,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
       :(
 
     hint: Avoid the user error in the future
@@ -269,7 +269,7 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     Caused by:
@@ -279,7 +279,7 @@
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
 
     It has broken some logic and that is
@@ -288,7 +288,7 @@
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
     │ :(
     ├─> It has broken some logic and that is
     │   very bad.
@@ -305,15 +305,15 @@
   str: |-
     test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
   ascii: |
     error: test-diagnostic
 
-    You touched a bit and it changed.
+    You touched a bit and it [yellow]changed[/].
     :(
   unicode: |
     error: test-diagnostic
 
-    × You touched a bit and it changed.
+    × You touched a bit and it [yellow]changed[/].
       :(
