@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Sequence, TypeVar
 
 import rich
+import rich.text
 import rich.traceback
 from rich.markup import escape
 
@@ -95,7 +96,7 @@ def _process(
             fallback_filename=str(docs_index),
         ),
     ]
-    causes = list(filter(None, sections))
+    causes = [rich.text.Text.from_markup(lines) for lines in sections if lines]
 
     if undocumented_codes and extra_codes:
         code = "undocumented-and-extra-codes"
