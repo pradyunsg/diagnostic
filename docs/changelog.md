@@ -1,6 +1,6 @@
 # Changelog
 
-## Release 2.0.1 (2024-04-07)
+## Release 2.1.0 (2024-04-07)
 
 - Use the correct rendering in `check-docs`.
 
