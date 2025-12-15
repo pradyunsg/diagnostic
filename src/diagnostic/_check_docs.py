@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, TypeVar
 
 import rich
 import rich.text
@@ -15,11 +14,7 @@ from rich.markup import escape
 from . import DiagnosticError
 from ._parsers import find_code_headings_in_document, find_codes_in_sources
 
-if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Sequence
-
 rich.traceback.install(show_locals=True)
-T = TypeVar("T")
 
 
 def _format_to_lines(
@@ -119,60 +114,6 @@ def _process(
     )
 
 
-class _BooleanOptionalAction(argparse.Action):  # pragma: no cover
-    """Handle optional boolean arguments that can be flipped with `--no-`.
-
-    Adapted from argparse.BooleanOptionalAction on Python 3.9.0.
-    """
-
-    def __init__(
-        self,
-        option_strings: Sequence[str],
-        dest: str,
-        nargs: int | str | None = None,
-        const: T | None = None,
-        default: T | str | None = None,
-        type: Callable[[str], T] | None = None,
-        choices: Iterable[T] | None = None,
-        required: bool = False,
-        help: str | None = None,
-        metavar: str | tuple[str, ...] | None = None,
-    ):
-        _option_strings: list[str] = []
-        for option_string in option_strings:
-            _option_strings.append(option_string)
-
-            if option_string.startswith("--"):
-                option_string = "--no-" + option_string[2:]
-                _option_strings.append(option_string)
-
-        super().__init__(
-            option_strings=_option_strings,
-            dest=dest,
-            nargs=0,
-            default=default,
-            type=type,
-            choices=choices,
-            required=required,
-            help=help,
-            metavar=metavar,
-        )
-
-    def __call__(
-        self,
-        parser: argparse.ArgumentParser,
-        namespace: argparse.Namespace,
-        values: str | Sequence[Any] | None,
-        option_string: str | None = None,
-    ) -> None:
-        assert option_string
-        if option_string in self.option_strings:
-            setattr(namespace, self.dest, not option_string.startswith("--no-"))
-
-    def format_usage(self):
-        return " | ".join(self.option_strings)
-
-
 def _get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="diagnostic.check-docs",
@@ -201,7 +142,7 @@ def _get_parser() -> argparse.ArgumentParser:
         "--fail-on-extra",
         dest="fail_on_extra",
         default=True,
-        action=_BooleanOptionalAction,
+        action=argparse.BooleanOptionalAction,
         help=(
             "Fail if there are codes in the documentation headings, that are "
             "not in the source code."
