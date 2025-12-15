@@ -132,7 +132,7 @@ class _BooleanOptionalAction(argparse.Action):  # pragma: no cover
         nargs: int | str | None = None,
         const: T | None = None,
         default: T | str | None = None,
-        type: Callable[[str], T] | argparse.FileType | None = None,
+        type: Callable[[str], T] | None = None,
         choices: Iterable[T] | None = None,
         required: bool = False,
         help: str | None = None,

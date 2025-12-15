@@ -2,7 +2,7 @@
 
 import nox
 
-ALL_SUPPORTED_PYTHONS = ["3.10", "3.11"]
+ALL_SUPPORTED_PYTHONS = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 nox.options.sessions = ["lint", "docs", "test"]
 
 
