@@ -2,15 +2,10 @@
 
 import ast
 import os
-import sys
 from collections import defaultdict
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
-
-if sys.version_info >= (3, 10):  # pragma: no cover
-    from typing import TypeAlias
-else:  # pragma: no cover
-    from typing_extensions import TypeAlias
+from typing import TypeAlias
 
 import docutils.core
 import docutils.nodes

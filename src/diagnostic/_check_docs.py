@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import Any, Callable, Iterable, Sequence, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 import rich
 import rich.text
@@ -14,6 +14,9 @@ from rich.markup import escape
 
 from . import DiagnosticError
 from ._parsers import find_code_headings_in_document, find_codes_in_sources
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Sequence
 
 rich.traceback.install(show_locals=True)
 T = TypeVar("T")

@@ -5,10 +5,13 @@ from __future__ import annotations
 import dataclasses
 import re
 import textwrap
-from typing import ClassVar, Iterator, Sequence
+from typing import TYPE_CHECKING, ClassVar
 
 import rich.console
 import rich.text
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator, Sequence
 
 RE_code = re.compile(
     r"""
