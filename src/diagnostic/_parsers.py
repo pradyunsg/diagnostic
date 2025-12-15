@@ -73,9 +73,10 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
                         and len(attr.targets) == 1
                         and isinstance(attr.targets[0], ast.Name)
                         and attr.targets[0].id == "code"
-                        and isinstance(attr.value, ast.Str)
+                        and isinstance(attr.value, ast.Constant)
+                        and isinstance(attr.value.value, str)
                     ):
-                        ref = attr.value.s
+                        ref = attr.value.value
                         if not RE_code.match(ref):
                             _ignoring(
                                 ctx="class-attribute",
@@ -87,8 +88,12 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
                         codes[ref].append((file, node.lineno))
             elif isinstance(node, ast.Call):
                 for kw in node.keywords:
-                    if kw.arg == "code" and isinstance(kw.value, ast.Str):
-                        ref = kw.value.s
+                    if (
+                        kw.arg == "code"
+                        and isinstance(kw.value, ast.Constant)
+                        and isinstance(kw.value.value, str)
+                    ):
+                        ref = kw.value.value
                         if not RE_code.match(ref):
                             _ignoring(
                                 ctx="call-argument",
