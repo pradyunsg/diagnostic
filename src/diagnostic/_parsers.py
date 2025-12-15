@@ -5,10 +5,9 @@ import os
 from collections import defaultdict
 from collections.abc import Callable
 from pathlib import Path
-from typing import TypeAlias
+from typing import Any, TypeAlias, cast
 
 import docutils.core
-import docutils.nodes
 import rich
 from markdown_it import MarkdownIt
 from rich.markup import escape
@@ -173,12 +172,15 @@ def find_code_headings_in_rst(doc_path: Path) -> codeLocationMapping:
         rst_string = f.read()
 
     # Parse the reStructuredText document
-    document: docutils.nodes.document = docutils.core.publish_doctree(rst_string)
+    document = cast(
+        "Any",  # docutils types are incomplete, and cause pyright to complain
+        docutils.core.publish_doctree(rst_string),  # type: ignore
+    )
 
     # Iterate through the document and extract all headings
     codes: codeLocationMapping = defaultdict(list)
     for node in document.findall(
-        condition=lambda n: getattr(n, "tagname", None) == "title"
+        condition=lambda n: getattr(n, "tagname", None) == "title"  # pyright: ignore
     ):
         heading_text = node.astext()
 
