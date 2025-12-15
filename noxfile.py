@@ -1,5 +1,4 @@
-"""Development automation.
-"""
+"""Development automation."""
 
 import nox
 

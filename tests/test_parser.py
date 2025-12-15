@@ -1,6 +1,4 @@
-"""Tests for the parsing and discovery logic for codes in code and docs.
-"""
-
+"""Tests for the parsing and discovery logic for codes in code and docs."""
 
 import textwrap
 from pathlib import Path

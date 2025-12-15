@@ -1,5 +1,4 @@
-"""Supporting functions for parsing the source code and documentation.
-"""
+"""Supporting functions for parsing the source code and documentation."""
 
 import ast
 import os
@@ -13,7 +12,6 @@ if sys.version_info >= (3, 10):  # pragma: no cover
 else:  # pragma: no cover
     from typing_extensions import TypeAlias
 
-import docutils
 import docutils.core
 import docutils.nodes
 import rich
@@ -38,9 +36,9 @@ def handle_directory_traversal(
     extensions: "tuple[str, ...]",
 ) -> codeLocationMapping:
     if not path.is_dir():
-        assert path.name.endswith(
-            extensions
-        ), f"expected {path} to end with one of {extensions}"
+        assert path.name.endswith(extensions), (
+            f"expected {path} to end with one of {extensions}"
+        )
         return func(path)
 
     codes: codeLocationMapping = defaultdict(list)
@@ -143,7 +141,7 @@ def find_code_headings_in_markdown(doc_path: Path) -> codeLocationMapping:
     tokens = parser.parse(Path(doc_path).read_text())  # type: ignore
 
     found_headings: list[tuple[str, int]] = []
-    current_heading: "tuple[str, int] | None" = None
+    current_heading: tuple[str, int] | None = None
     for token in tokens:
         if token.type == "heading_open":
             assert not current_heading, "active heading already"

@@ -37,7 +37,10 @@ Documentation = "https://diagnostic.readthedocs.io/en/stable/"
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 
-[tool.ruff.isort]
+[tool.ruff.lint]
+extend-select = ["I", "UP", "FA", "TC"]
+
+[tool.ruff.lint.isort]
 known-first-party = ["diagnostic"]
 
 [tool.pyright]

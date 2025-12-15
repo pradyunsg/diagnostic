@@ -1,5 +1,4 @@
-"""Check that all the errors in the source code have a documentation entry.
-"""
+"""Check that all the errors in the source code have a documentation entry."""
 
 from __future__ import annotations
 
@@ -229,7 +228,7 @@ def main() -> None:
         sys.exit(1)
     if docs_index.is_file() and not docs_index.name.endswith((".rst", ".md")):
         rich.print(
-            f"Error index {docs_index} is not a " "reStructuredText or Markdown file.",
+            f"Error index {docs_index} is not a reStructuredText or Markdown file.",
             file=sys.stderr,
         )
         sys.exit(1)

@@ -1,5 +1,4 @@
-"""Concrete classes for diagnostic objects, for use in standard Python toolchain.
-"""
+"""Concrete classes for diagnostic objects, for use in standard Python toolchain."""
 
 from ._base import Diagnostic, DiagnosticStyle
 

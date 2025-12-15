@@ -1,5 +1,4 @@
-"""Present errors that contain causes better understand what happened.
-"""
+"""Present errors that contain causes better understand what happened."""
 
 from ._base import Diagnostic, DiagnosticStyle
 from ._concrete import DiagnosticError, DiagnosticWarning

@@ -19,7 +19,7 @@ def load_data_from_yaml(filename: str) -> list[dict[str, Any]]:
     def my_rich_text_constructor(
         loader: yaml.FullLoader, node: yaml.ScalarNode
     ) -> Text:
-        return Text.from_markup(cast(str, loader.construct_scalar(node)))
+        return Text.from_markup(cast("str", loader.construct_scalar(node)))
 
     complete_filename = os.path.join(
         os.path.dirname(__file__),
