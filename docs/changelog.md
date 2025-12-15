@@ -1,5 +1,12 @@
 # Changelog
 
+## Release 3.0.0 (2025-12-15)
+
+- Drop support for Python 3.7, 3.8, 3.9.
+- Add explicitly tested support for Python 3.12, 3.13 and 3.14.
+- Use the standard library `argparse` for boolean options.
+- Modernise the code and tooling used.
+
 ## Release 2.1.0 (2024-04-07)
 
 - Use the correct rendering in `check-docs`.
