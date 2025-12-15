@@ -1,22 +1,21 @@
-"""Development automation.
-"""
+"""Development automation."""
 
 import nox
 
-ALL_SUPPORTED_PYTHONS = ["3.7", "3.8", "3.9", "3.10", "3.11"]
+ALL_SUPPORTED_PYTHONS = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 nox.options.sessions = ["lint", "docs", "test"]
 
 
 @nox.session
 def lint(session: nox.Session) -> None:
-    session.notify("pre-commit")
+    session.notify("prek")
     session.notify("typecheck")
 
 
-@nox.session(name="pre-commit")
-def pre_commit(session: nox.Session) -> None:
-    session.install("pre-commit")
-    session.run("pre-commit", "run", "--all-files", *session.posargs)
+@nox.session(name="prek")
+def prek(session: nox.Session) -> None:
+    session.install("prek")
+    session.run("prek", "run", "--all-files", *session.posargs)
 
 
 @nox.session(python=[ALL_SUPPORTED_PYTHONS[0], ALL_SUPPORTED_PYTHONS[-1]])

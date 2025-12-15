@@ -9,10 +9,9 @@ dynamic = ["version", "description"]
 dependencies = [
     "rich",
     "markdown-it-py",
-    "typing_extensions; python_version < '3.10'",
     "docutils",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 readme = "README.md"
 classifiers = [
@@ -37,7 +36,10 @@ Documentation = "https://diagnostic.readthedocs.io/en/stable/"
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 
-[tool.ruff.isort]
+[tool.ruff.lint]
+extend-select = ["I", "UP", "FA", "TC"]
+
+[tool.ruff.lint.isort]
 known-first-party = ["diagnostic"]
 
 [tool.pyright]

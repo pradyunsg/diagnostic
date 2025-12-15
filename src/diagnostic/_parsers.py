@@ -1,21 +1,13 @@
-"""Supporting functions for parsing the source code and documentation.
-"""
+"""Supporting functions for parsing the source code and documentation."""
 
 import ast
 import os
-import sys
 from collections import defaultdict
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
+from typing import Any, TypeAlias, cast
 
-if sys.version_info >= (3, 10):  # pragma: no cover
-    from typing import TypeAlias
-else:  # pragma: no cover
-    from typing_extensions import TypeAlias
-
-import docutils
 import docutils.core
-import docutils.nodes
 import rich
 from markdown_it import MarkdownIt
 from rich.markup import escape
@@ -38,9 +30,9 @@ def handle_directory_traversal(
     extensions: "tuple[str, ...]",
 ) -> codeLocationMapping:
     if not path.is_dir():
-        assert path.name.endswith(
-            extensions
-        ), f"expected {path} to end with one of {extensions}"
+        assert path.name.endswith(extensions), (
+            f"expected {path} to end with one of {extensions}"
+        )
         return func(path)
 
     codes: codeLocationMapping = defaultdict(list)
@@ -81,9 +73,10 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
                         and len(attr.targets) == 1
                         and isinstance(attr.targets[0], ast.Name)
                         and attr.targets[0].id == "code"
-                        and isinstance(attr.value, ast.Str)
+                        and isinstance(attr.value, ast.Constant)
+                        and isinstance(attr.value.value, str)
                     ):
-                        ref = attr.value.s
+                        ref = attr.value.value
                         if not RE_code.match(ref):
                             _ignoring(
                                 ctx="class-attribute",
@@ -95,8 +88,12 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
                         codes[ref].append((file, node.lineno))
             elif isinstance(node, ast.Call):
                 for kw in node.keywords:
-                    if kw.arg == "code" and isinstance(kw.value, ast.Str):
-                        ref = kw.value.s
+                    if (
+                        kw.arg == "code"
+                        and isinstance(kw.value, ast.Constant)
+                        and isinstance(kw.value.value, str)
+                    ):
+                        ref = kw.value.value
                         if not RE_code.match(ref):
                             _ignoring(
                                 ctx="call-argument",
@@ -143,7 +140,7 @@ def find_code_headings_in_markdown(doc_path: Path) -> codeLocationMapping:
     tokens = parser.parse(Path(doc_path).read_text())  # type: ignore
 
     found_headings: list[tuple[str, int]] = []
-    current_heading: "tuple[str, int] | None" = None
+    current_heading: tuple[str, int] | None = None
     for token in tokens:
         if token.type == "heading_open":
             assert not current_heading, "active heading already"
@@ -180,12 +177,15 @@ def find_code_headings_in_rst(doc_path: Path) -> codeLocationMapping:
         rst_string = f.read()
 
     # Parse the reStructuredText document
-    document: docutils.nodes.document = docutils.core.publish_doctree(rst_string)
+    document = cast(
+        "Any",  # docutils types are incomplete, and cause pyright to complain
+        docutils.core.publish_doctree(rst_string),  # type: ignore
+    )
 
     # Iterate through the document and extract all headings
     codes: codeLocationMapping = defaultdict(list)
     for node in document.findall(
-        condition=lambda n: getattr(n, "tagname", None) == "title"
+        condition=lambda n: getattr(n, "tagname", None) == "title"  # pyright: ignore
     ):
         heading_text = node.astext()
 

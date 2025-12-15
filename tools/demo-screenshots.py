@@ -1,5 +1,6 @@
-"""A script to generate screenshots for the documentation.
-"""
+"""A script to generate screenshots for the documentation."""
+
+from __future__ import annotations
 
 import os
 from pathlib import Path

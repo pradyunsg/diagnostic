@@ -1,12 +1,11 @@
-"""Check that all the errors in the source code have a documentation entry.
-"""
+"""Check that all the errors in the source code have a documentation entry."""
 
 from __future__ import annotations
 
 import argparse
 import sys
 from pathlib import Path
-from typing import Any, Callable, Iterable, Sequence, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 import rich
 import rich.text
@@ -15,6 +14,9 @@ from rich.markup import escape
 
 from . import DiagnosticError
 from ._parsers import find_code_headings_in_document, find_codes_in_sources
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Sequence
 
 rich.traceback.install(show_locals=True)
 T = TypeVar("T")
@@ -130,7 +132,7 @@ class _BooleanOptionalAction(argparse.Action):  # pragma: no cover
         nargs: int | str | None = None,
         const: T | None = None,
         default: T | str | None = None,
-        type: Callable[[str], T] | argparse.FileType | None = None,
+        type: Callable[[str], T] | None = None,
         choices: Iterable[T] | None = None,
         required: bool = False,
         help: str | None = None,
@@ -229,7 +231,7 @@ def main() -> None:
         sys.exit(1)
     if docs_index.is_file() and not docs_index.name.endswith((".rst", ".md")):
         rich.print(
-            f"Error index {docs_index} is not a " "reStructuredText or Markdown file.",
+            f"Error index {docs_index} is not a reStructuredText or Markdown file.",
             file=sys.stderr,
         )
         sys.exit(1)

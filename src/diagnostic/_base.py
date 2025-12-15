@@ -1,16 +1,17 @@
-"""The main functional unit of this package.
-"""
+"""The main functional unit of this package."""
 
 from __future__ import annotations
 
 import dataclasses
 import re
 import textwrap
-from typing import ClassVar, Iterator, Sequence
+from typing import TYPE_CHECKING, ClassVar
 
-import rich
 import rich.console
 import rich.text
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator, Sequence
 
 RE_code = re.compile(
     r"""
@@ -211,9 +212,7 @@ class Diagnostic:
         console: rich.console.Console,
         options: rich.console.ConsoleOptions,
     ) -> rich.console.RenderResult:
-        yield (
-            f"[{self.style.color} bold]{self.style.name}[/]: " f"[bold]{self.code}[/]"
-        )
+        yield f"[{self.style.color} bold]{self.style.name}[/]: [bold]{self.code}[/]"
         yield ""
 
         if not options.ascii_only:
