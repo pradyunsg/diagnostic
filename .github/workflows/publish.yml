@@ -3,14 +3,18 @@ name: Publish to PyPI
 on:
   push:
     tags:
-      - "*"
+    - "*"
 
-permissions:
-  contents: read
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
     name: "Build dists"
+    timeout-minutes: 30
     runs-on: "ubuntu-latest"
     environment:
       name: "publish"
@@ -18,37 +22,43 @@ jobs:
       hashes: ${{ steps.hash.outputs.hashes }}
 
     steps:
-      - name: "Checkout repository"
-        uses: "actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8"
+    - name: "Checkout repository"
+      uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"  # v7.0.1
+      with:
+        persist-credentials: false
+    - name: "Setup Python"
+      uses: "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"  # v7.0.0
+      with:
+        python-version: "3.x"
 
-      - name: "Setup Python"
-        uses: "actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548"
-        with:
-          python-version: "3.x"
+    - name: "Install dependencies"
+      run: python -m pip install build
 
-      - name: "Install dependencies"
-        run: python -m pip install build
+    - name: "Build dists"
+      run: |
+        SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) \
+        python -m build
 
-      - name: "Build dists"
-        run: |
-          SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) \
-          python -m build
+    - name: "Generate hashes"
+      id: hash
+      run: |
+        cd dist
+        echo "hashes=$(sha256sum -- * | base64 -w0)" >> "$GITHUB_OUTPUT"
 
-      - name: "Generate hashes"
-        id: hash
-        run: |
-          cd dist && echo "name=hashes::$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
+    - name: "Upload dists"
+      uses: "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9"  # v7.0.2
+      with:
+        name: "dist"
+        path: "dist/"
+        if-no-files-found: error
+        retention-days: 5
 
-      - name: "Upload dists"
-        uses: "actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f"
-        with:
-          name: "dist"
-          path: "dist/"
-          if-no-files-found: error
-          retention-days: 5
+    permissions:
+      contents: read
 
   publish:
     name: "Publish"
+    timeout-minutes: 30
     if: startsWith(github.ref, 'refs/tags/')
     needs: ["build"]
     environment:
@@ -59,17 +69,19 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - name: "Download dists"
-        uses: "actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131"
-        with:
-          name: "dist"
-          path: "dist/"
+    - name: "Download dists"
+      uses: "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333"  # v8.0.2
+      with:
+        name: "dist"
+        path: "dist/"
 
-      - name: "Upload dists to GitHub Release"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: |
-          gh release upload ${{ github.ref_name }} dist/* --repo ${{ github.repository }}
+    - name: "Upload dists to GitHub Release"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        RELEASE_TAG: ${{ github.ref_name }}
+        GH_REPO: ${{ github.repository }}
+      run: |
+        gh release upload "$RELEASE_TAG" dist/* --repo "$GH_REPO"
 
-      - name: "Publish dists to PyPI"
-        uses: "pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e" # v1.8.8
+    - name: "Publish dists to PyPI"
+      uses: "pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086"  # v1.14.3
