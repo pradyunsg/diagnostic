@@ -11,7 +11,7 @@ dependencies = [
     "markdown-it-py",
     "docutils",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { file = "LICENSE" }
 readme = "README.md"
 classifiers = [
@@ -38,6 +38,9 @@ addopts = "--import-mode=importlib"
 
 [tool.ruff.lint]
 extend-select = ["I", "UP", "FA", "TC"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/diagnostic/check-docs.py" = ["N999"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["diagnostic"]

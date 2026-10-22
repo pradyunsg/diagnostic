@@ -14,7 +14,7 @@ from rich.markup import escape
 
 from ._base import RE_code
 
-codeLocationMapping: TypeAlias = "dict[str, list[tuple[Path, int]]]"
+CodeLocationMapping: TypeAlias = "dict[str, list[tuple[Path, int]]]"
 
 
 def _ignoring(*, ctx: str, what: str, why: str, where: "tuple[Path, int]") -> None:
@@ -25,17 +25,17 @@ def _ignoring(*, ctx: str, what: str, why: str, where: "tuple[Path, int]") -> No
 
 def handle_directory_traversal(
     path: Path,
-    func: Callable[[Path], codeLocationMapping],
+    func: Callable[[Path], CodeLocationMapping],
     *,
     extensions: "tuple[str, ...]",
-) -> codeLocationMapping:
+) -> CodeLocationMapping:
     if not path.is_dir():
         assert path.name.endswith(extensions), (
             f"expected {path} to end with one of {extensions}"
         )
         return func(path)
 
-    codes: codeLocationMapping = defaultdict(list)
+    codes: CodeLocationMapping = defaultdict(list)
     for dirpath, _, filenames in os.walk(path):
         for filename in filenames:
             if filename.endswith(extensions):
@@ -45,7 +45,7 @@ def handle_directory_traversal(
     return codes
 
 
-def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
+def find_codes_in_sources(src_path: Path) -> CodeLocationMapping:
     """Find all the codes in the source code, using the AST.
 
     This uses the AST to find all the error codes in the source code. An
@@ -59,7 +59,7 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
         tuples, where the code was found.
     """
 
-    def find_codes_in_file(file: Path) -> codeLocationMapping:
+    def find_codes_in_file(file: Path) -> CodeLocationMapping:
         codes: defaultdict[str, list[tuple[Path, int]]] = defaultdict(list)
 
         with open(file) as f:
@@ -109,7 +109,7 @@ def find_codes_in_sources(src_path: Path) -> codeLocationMapping:
     return handle_directory_traversal(src_path, find_codes_in_file, extensions=(".py",))
 
 
-def find_code_headings_in_document(doc_path: Path) -> codeLocationMapping:
+def find_code_headings_in_document(doc_path: Path) -> CodeLocationMapping:
     """Finds all the level 2+ headings within the document.
 
     Returns:
@@ -117,7 +117,7 @@ def find_code_headings_in_document(doc_path: Path) -> codeLocationMapping:
         heading was found.
     """
 
-    def find_codes_in_file(doc_path: Path) -> codeLocationMapping:
+    def find_codes_in_file(doc_path: Path) -> CodeLocationMapping:
         if doc_path.name.endswith(".md"):
             return find_code_headings_in_markdown(doc_path)
         else:
@@ -129,7 +129,7 @@ def find_code_headings_in_document(doc_path: Path) -> codeLocationMapping:
     )
 
 
-def find_code_headings_in_markdown(doc_path: Path) -> codeLocationMapping:
+def find_code_headings_in_markdown(doc_path: Path) -> CodeLocationMapping:
     """Finds potential code headings in a Markdown document.
 
     Returns:
@@ -158,14 +158,14 @@ def find_code_headings_in_markdown(doc_path: Path) -> codeLocationMapping:
             assert isinstance(new_text, str)
             current_heading = (new_text, token.map[0] + 1)
 
-    codes: codeLocationMapping = defaultdict(list)
+    codes: CodeLocationMapping = defaultdict(list)
     for heading, lineno in found_headings:
         codes[heading].append((doc_path, lineno))  # pyright: ignore
 
     return codes
 
 
-def find_code_headings_in_rst(doc_path: Path) -> codeLocationMapping:
+def find_code_headings_in_rst(doc_path: Path) -> CodeLocationMapping:
     """Finds all the level 2+ headings within the document.
 
     Returns:
@@ -183,7 +183,7 @@ def find_code_headings_in_rst(doc_path: Path) -> codeLocationMapping:
     )
 
     # Iterate through the document and extract all headings
-    codes: codeLocationMapping = defaultdict(list)
+    codes: CodeLocationMapping = defaultdict(list)
     for node in document.findall(
         condition=lambda n: getattr(n, "tagname", None) == "title"  # pyright: ignore
     ):
