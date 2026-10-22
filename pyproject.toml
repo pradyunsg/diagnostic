@@ -39,6 +39,9 @@ addopts = "--import-mode=importlib"
 [tool.ruff.lint]
 extend-select = ["I", "UP", "FA", "TC"]
 
+[tool.ruff.lint.per-file-ignores]
+"src/diagnostic/check-docs.py" = ["N999"]
+
 [tool.ruff.lint.isort]
 known-first-party = ["diagnostic"]
 
